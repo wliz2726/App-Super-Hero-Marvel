@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PruebaXamarin.Views.MarvelPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Marvel">
+    <ContentPage.Content>
+        <StackLayout
+            BindingContext="{Binding MarvelPage}">
+            <Entry
+                Margin="0,25,0,0"
+                HorizontalOptions="CenterAndExpand"
+                Placeholder="SuperHero's Name"
+                Text="{Binding Hero, Mode=TwoWay}">
+            </Entry>
+            <Button
+                Text="Search"
+                TextColor="White"
+                BackgroundColor="DodgerBlue"
+                Command="{Binding SearchCommand}"
+                CornerRadius="15"
+                Margin="15,0">
+            </Button>
+            
+            <Frame
+                CornerRadius="15"
+                HasShadow="true"
+                Margin="15,5,15,15">
+                
+                <!--Realiza una accion al hacer tap en el Frame-->
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SelectHeroCommand}"/>
+                </Frame.GestureRecognizers>
+
+                <StackLayout>
+                    
+                    <Image
+                        Source="{Binding Img}"
+                        WidthRequest="200"/>
+            
+                    <ListView
+                        HasUnevenRows="true"
+                        IsPullToRefreshEnabled="true"
+                        IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                        ItemsSource="{Binding SuperHero}"
+                        RefreshCommand="{Binding RefreshCommand}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                <StackLayout>
+                                    <Label
+                                        FontSize="Large"
+                                        HorizontalOptions="Center"
+                                        Text="{Binding Name}"/>
+                                        <Label Text="{Binding Description}"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
+                </StackLayout>
+                
+            </Frame>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
